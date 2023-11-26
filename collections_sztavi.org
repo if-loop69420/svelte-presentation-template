@@ -1,0 +1,33 @@
+#+author: Jeremy Sztavinovszki
+#+title: Collections Sztavinovszki
+
+* Funktionierender PL/SQL code.
+#+NAME: Good Code
+#+BEGIN_SRC plsql
+DECLARE
+    l_names DBMS_UTILITY.maxname_array;
+BEGIN
+    l_names (1) := 'Strawberry';
+    l_names (10) := 'Blackberry';
+    l_names (2) := 'Raspberry';
+
+    DECLARE
+        indx PLS_INTEGER := l_names.FIRST;
+    BEGIN
+
+        WHILE (indx IS NOT NULL)
+        LOOP
+            DBMS_OUTPUT.put_line (l_names (indx));
+            indx := l_names.NEXT (indx);
+        END LOOP;
+    END;
+END;
+/
+#+END_SRC
+
+* Output
+[[./output_pic.png]]
+
+* Erklärung
+Das ist der richtige code, weil hier der Index in einem Block vor dem Loop deklariert und mit der   NEXT Anweisung aus dem Associative Array gefetched wird nach jeder Iteration.
+In den anderen Beispielen gibt's entweder indx nicht definiert, oder es wird nicht/falsch gefetched.
